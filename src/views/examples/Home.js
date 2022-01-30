@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import Caver from 'caver-js';
 import { Button, Card, CardBody, Container, Row, Col } from "reactstrap";
 import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toasts';
@@ -12,21 +12,19 @@ export default function Home() {
   const [soulModal, setSoulModal] = useState(false);
   const [nftModal, setNFTModal] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.body.classList.add("profile-page");
 
     const { klaytn } = window;
     if(klaytn) {
-      klaytn.on('accountsChanged', () => {
-        if(soulModal || nftModal) {
-          setSoulModal(false);
-          setNFTModal(false);  
-        }
-      });
-      
       klaytn.on('networkChanged', () => {
         setSoulModal(false);
         setNFTModal(false);
+      });
+
+      klaytn.on('accountsChanged', () => {
+        setSoulModal(false);
+        setNFTModal(false);  
       });
     }
   },[]);
@@ -111,7 +109,6 @@ export default function Home() {
                 <Button
                   className="btn-simple mt-3"
                   color="success"
-                  href="#pablo"
                   onClick={() => open('soul')}
                 >
                   실험 참여
@@ -155,7 +152,6 @@ export default function Home() {
                   <Button
                     className="btn-simple"
                     color="info"
-                    href="#pablo"
                     onClick={() => open('nft')}
                   >
                     들어가기
@@ -187,7 +183,6 @@ export default function Home() {
                       <Button
                         className="btn-simple"
                         color="warning"
-                        href="#pablo"
                         onClick={() => support()}
                       >
                         50 KLAY 기부
@@ -245,7 +240,6 @@ export default function Home() {
                 <Button
                   className="btn mt-3 mr-2"
                   color="success"
-                  href="#pablo"
                   onClick={(e) => e.preventDefault()}
                 >
                   산
@@ -253,7 +247,6 @@ export default function Home() {
                 <Button
                   className="btn mt-3"
                   color="info"
-                  href="#pablo"
                   onClick={(e) => e.preventDefault()}
                 >
                   호수
