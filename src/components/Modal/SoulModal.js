@@ -19,7 +19,6 @@ export default function SoulModal({ modal, close }) {
     }
   }, [modal]);
   
-
   const tabClass = (idx) => {
     const defaultClass = 'btn-simple btn-sm';
     if(selectedTab === idx) return defaultClass + ' btn-neutral';
@@ -120,6 +119,14 @@ export default function SoulModal({ modal, close }) {
     }
   }
 
+  const selectId = id => {
+    if(id > -1 && id === selectedId) {
+      window.open(`https://klu.bs/pfp/${NFT_LIST[selectedTab].addr}/${id}`);
+    } else {
+      setSelectedId(id);
+    }
+  }
+
   return (
     <Modal isOpen={modal} modalClassName="modal-black">
       <div className="modal-header">
@@ -165,7 +172,7 @@ export default function SoulModal({ modal, close }) {
                 lg="4"
                 md="4"
                 key={id}
-                onClick={() => setSelectedId(id)}
+                onClick={() => selectId(id)}
                 style={{ border: itemStyle(id) }}
               >
                 <img
